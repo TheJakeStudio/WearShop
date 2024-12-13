@@ -9,11 +9,10 @@ type PageParams = {
 };
 
 export default async function ProductDetail({ params }: PageParams) {
-  const productId = parseInt(params.id);
+  const productId = Number(params.id);
 
- 
   if (isNaN(productId)) {
-    notFound(); // Показывает 404, если ID некорректен
+    notFound(); 
   }
 
 

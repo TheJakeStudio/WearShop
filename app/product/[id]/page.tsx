@@ -1,12 +1,27 @@
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
-import { getProductById } from '../../../lib/products'
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { getProductById } from '../../../lib/products';
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  const product = getProductById(parseInt(params.id))
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 
+export default async function ProductDetail({ params }: PageProps) {
+  const productId = parseInt(params.id);
+
+  // Проверка на корректность ID
+  if (isNaN(productId)) {
+    notFound(); // Показывает 404, если ID некорректен
+  }
+
+  // Получение данных о продукте
+  const product = await getProductById(productId);
+
+  // Если продукт не найден, вернуть 404
   if (!product) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -31,6 +46,5 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

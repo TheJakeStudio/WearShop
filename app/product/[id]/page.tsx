@@ -2,24 +2,24 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProductById } from '../../../lib/products';
 
-type PageProps = {
+type PageParams = {
   params: {
     id: string;
   };
 };
 
-export default async function ProductDetail({ params }: PageProps) {
+export default async function ProductDetail({ params }: PageParams) {
   const productId = parseInt(params.id);
 
-  // Проверка на корректность ID
+ 
   if (isNaN(productId)) {
     notFound(); // Показывает 404, если ID некорректен
   }
 
-  // Получение данных о продукте
+
   const product = await getProductById(productId);
 
-  // Если продукт не найден, вернуть 404
+  
   if (!product) {
     notFound();
   }
